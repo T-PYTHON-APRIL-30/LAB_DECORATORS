@@ -21,16 +21,11 @@ def validate_numbers(func):
                 raise Exception("provide numbers")
     return wrapper
 
-
-try:
-    @validate_numbers
-    def add(x,y):
-        return x+y
-    @validate_numbers
-    def multiply(x,y):
-        return x*y
-
-    print(f"result for add function: {add(9,7)}")
-    print(f"result for multiply function: {multiply(-8,6)}")
-except Exception as e:
-    print(e)
+@validate_numbers
+def add(x,y):
+    return x+y
+@validate_numbers
+def multiply(x,y):
+    return x*y
+print(f"result for add function: {add(9,7)}")
+print(f"result for multiply function: {multiply(8,6)}")
