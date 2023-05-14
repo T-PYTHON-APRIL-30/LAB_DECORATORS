@@ -5,19 +5,15 @@ The validate_numbers decorator should check if all arguments are numbers and are
 Create two functions, add and multiply, both accepting two arguments. Decorate them with the validate_numbers decorator. (to test one of the arguments in the second function should be negative)
 '''
 
-
-from curses.ascii import isdigit
-
-
 def validate_numbers(fun):
-    def wrapper(*args, **kargs):
+    def wrapper(*args, **kwargs):
         
-        for arg in args:
-            if type(arg) != int:
+        for arg in args + tuple(kwargs.values()):
+            if not isinstance(arg, (int,float)):
                raise Exception ("The input is not a number")
-            elif arg < 0:
+            if arg < 0:
                 raise Exception ("The input is negative")
-        fun(*args, **kargs)
+        return fun(*args, **kwargs)
     return wrapper
     
     
@@ -25,12 +21,13 @@ def validate_numbers(fun):
 @validate_numbers
 def add(num1 :int ,num2 :int):
     result :int = num1 + num2
-    print(f"\nThe result of the addition = {result}\n")
+    return(f"\nThe result of the addition = {result}\n")
 @validate_numbers
 def multiply(num1, num2):
     result = num1 * num2
-    print(f"\nThe result of the multiply = {result}\n")
+    return(f"\nThe result of the multiply = {result}\n")
 
-add(1,10)
-multiply(10,20)
-multiply(-10,20)
+print(add(1,10))
+print(multiply(10,20))
+print(add("i",2))
+print(multiply(-10,20))
