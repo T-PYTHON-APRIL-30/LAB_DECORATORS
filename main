@@ -1,0 +1,24 @@
+# edcorator should check if all arguments are non-negative numbers
+def validate_numbers(func):
+    def wrapper(*args):
+        for arg in args:
+            if not isinstance(arg, int) or arg < 0:
+                raise ValueError("must be non-negative number")
+        return func(*args)
+    return wrapper
+
+# two functions, add and multiply:
+@validate_numbers
+def add(x, y):
+    return x + y
+
+@validate_numbers
+def multiply(x, y):
+    return x * y
+
+# test the code
+print(add(2, 3)) 
+print(multiply(4, -5))
+
+
+
