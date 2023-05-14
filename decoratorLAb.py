@@ -10,11 +10,13 @@ validate_numbers decorator. (to test one of the arguments in the second function
 
 
 def validate_numbers(func):
-    def wrapper(x,y):
-        if (x < 0 or y <0) or (type(x) != int or type(y) != int):
-            raise ValueError('This is a nigative number...')
-        else:
-            return func(x,y)
+    def wrapper(*args,**kwargs):
+
+        for arg in args:
+            
+            if arg < 0 or type(arg) != int:
+                raise ValueError('This is a nigative number...')
+        return func(*args,**kwargs)        
 
     return wrapper
     
