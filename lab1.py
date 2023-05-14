@@ -2,13 +2,18 @@
 
 def validate_numbers(fun):
     def wrapper(*args, **kwargs):
-        for i in args:
-            if i < 0:
-                raise Exception("number is negative")
-        for i in args:
+
+        # since args is a tuple and kwargs is a dict we need to change kwargs to tuple
+        for i in args + tuple(kwargs.values()):
+            # we could use: "if not instance(i,(int, float)):"
             if type(i) != float and type(i) != int:
                 raise Exception("only accept numbers")
-        result = fun(*args, **kwargs)
+            if i < 0:
+                raise Exception("number is negative")
+
+            if type(i) != float and type(i) != int:
+                raise Exception("only accept numbers")
+        return fun(*args, **kwargs)
 
     return wrapper
 
@@ -20,7 +25,7 @@ def add_function(x, y):
 
 @validate_numbers  # calling the wrapper for the function
 def multiply_function(x, y):
-    return x*y
+    return print(x*y)
 
 
 # variables
